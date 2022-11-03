@@ -1,0 +1,147 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API Direto com Dono",
+      "description": "Essa API foi feita para a plataforma Direto com o dono",
+      "version": "1.0.0"
+    },
+  
+    "servers": [
+      {
+        "url": "http://localhost:3030",
+        "description": "Servidor de Teste"
+      }
+    ],
+    "paths": {
+      "/signIn": {
+        "post": {
+          "summary": "Rota para Criação de um novo usuário",
+          "description": "Essa rota tem como responsabilidade verificar os dados e registra-los no banco de dados",
+          "tags": ["User"],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "Cadastro": {
+                    "value": {
+                      "nome_user": "Bruno",
+                      "sobrenome_user": "Silva",
+                      "email_user": "bru_silva@gmail.com",
+                      "senha_user": "testSenha"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Usuário cadastrado com sucesso!",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Usuário já cadastrado!"
+            }
+          }
+        }
+      },
+
+      "/login": {
+        "post": {
+          "summary": "Rota de Login",
+          "description": "nesta rota será feito uma comparação para verificar se o usuário existe e se as credenciais de acesso estão corretas",
+          "tags": ["User"],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/Models/User"
+                },
+                "examples": {
+                  "Login": {
+                    "value": {
+                      "email_user": " vi@dev.com",
+                      "senha_user": "Kmasoaegn@12w32"
+                      
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Conectado com sucesso!",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Usuário não cadastrado!"
+            },
+            "421": {
+                "description": "O e-mail é obrigatório"
+            },
+            "422": {
+                "description": "A senha é obrigatória"
+            }
+          }
+        }
+      }
+
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "nome_user": {
+              "type": "string",
+              "required": true
+            },
+  
+            "sobrenome_user": {
+              "type": "string",
+              "required": true
+            },
+  
+            "email_user": {
+              "type": "string",
+              "required": true,
+              "unique": true
+            },
+  
+            "senha_user": {
+              "type": "string",
+              "required": true
+            },
+  
+            "datacreate_user": {
+              "type": "date",
+              "required": true
+            }
+            
+            }
+          }
+
+    
+    }
+
+    }
+}
+  
